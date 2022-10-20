@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  build:
+    executor: node
+    steps:
+      - checkout
+
+workflows:
+  docs:
+    when:
+      unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
+    jobs:
+      - build
+
+  cli:
+    when: << pipeline.parameters.cli >>
+    jobs:
+      - build
+  
+  local-api:
+    when: << pipeline.parameters.local-api >>
+    jobs:
+      - build
+  
+  local-client:
+    when: << pipelines.parameters.local-client >>
+    jobs:
+      - build
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:18.11.0
+
+parameters:
+  cli:
+    type: boolean
+    default: false
+  local-api:
+    type: boolean
+    default: false
+  local-client:
+    type: boolean
+    default: false
+
+# VS Code Extension Version: 1.0.0
