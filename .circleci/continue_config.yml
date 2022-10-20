@@ -24,7 +24,7 @@ workflows:
       - build
   
   local-client:
-    when: << pipelines.parameters.local-client >>
+    when: << pipeline.parameters.local-client >>
     jobs:
       - build
 
