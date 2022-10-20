@@ -9,7 +9,6 @@ workflows:
   generate-config:
     jobs:
       - path-filtering/filter:
-          config-path: .circleci/continue.yml
           mapping: |
             packages/cli/.* cli true
             packages/local-api/.* local-api true
