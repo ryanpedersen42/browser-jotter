@@ -1,10 +1,22 @@
 version: 2.1
 
+orbs:
+  node: circleci/node@5.0.3
+
 jobs:
   build:
     executor: node
+    parameters:
+      scope:
+        default: "local-client"
+        type: string
     steps:
       - checkout
+      - node/install-packages
+      - run:
+          command: |
+            npx lerna bootstrap 
+            npm run test --scope=<< parameters.scope >>
 
 workflows:
   docs:
@@ -12,21 +24,23 @@ workflows:
       unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
     jobs:
       - build
-
   cli:
     when: << pipeline.parameters.cli >>
     jobs:
-      - build
+      - build:
+          scope: cli
   
   local-api:
     when: << pipeline.parameters.local-api >>
     jobs:
-      - build
+      - build:
+          scope: local-api
   
   local-client:
     when: << pipeline.parameters.local-client >>
     jobs:
-      - build
+      - build:
+          scope: local-client
 
 executors:
   node:
