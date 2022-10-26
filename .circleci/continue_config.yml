@@ -11,7 +11,7 @@ jobs:
       - node/install-packages
       - run:
           command: |
-            npx lerna boostrap 
+            npx lerna bootstrap 
             npm run test
 
 workflows:
