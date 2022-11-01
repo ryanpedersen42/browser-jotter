@@ -2,10 +2,6 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.22.1"
-  },
-  "scripts": {
-    "start": "npx lerna run start --parallel",
-    "test": "npx lerna run test"
+    "lerna": "^6.0.1"
   }
 }
