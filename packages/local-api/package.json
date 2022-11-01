@@ -12,6 +12,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
+    "test": "echo passed",
     "prepublishOnly": "tsc"
   },
   "keywords": [],
