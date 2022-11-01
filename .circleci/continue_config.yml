@@ -8,15 +8,14 @@ jobs:
     executor: node
     parameters:
       scope:
-        default: "local-client"
+        default: "browser-jotter"
         type: string
     steps:
       - checkout
       - node/install-packages
       - run:
           command: |
-            npx lerna bootstrap 
-            npm run test --scope=<< parameters.scope >>
+            npx lerna run test --scope=<< parameters.scope >>
 
 workflows:
   docs:
@@ -27,20 +26,19 @@ workflows:
   cli:
     when: << pipeline.parameters.cli >>
     jobs:
-      - build:
-          scope: cli
+      - build
   
   local-api:
     when: << pipeline.parameters.local-api >>
     jobs:
       - build:
-          scope: local-api
+          scope: "@browser-jotter/local-api"
   
   local-client:
     when: << pipeline.parameters.local-client >>
     jobs:
       - build:
-          scope: local-client
+          scope: "@browser-jotter/local-client"
 
 executors:
   node:
