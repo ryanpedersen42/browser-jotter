@@ -12,7 +12,8 @@ jobs:
         type: string
     steps:
       - checkout
-      - node/install-packages
+      - monorepo_cache:
+          filename: combined-package-lock.txt
       - run:
           command: |
             npx lerna run test --scope=<< parameters.scope >>
@@ -45,6 +46,31 @@ executors:
     docker:
       - image: cimg/node:18.11.0
 
+commands:
+  monorepo_cache:
+    description: "Concatenate all package-lock.json files recognized by lerna.js into single file. File is used as checksum source for part of caching key."
+    parameters:
+      filename:
+        type: string
+    steps:
+      - run:
+          name: Combine package-lock.json files to single file
+          command: npx lerna la -a | awk -F packages '{printf "\"packages%s/package-lock.json\" ", $2}' | xargs cat > combined-package-lock.txt
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
+            - v1-deps
+      - run:
+          name: Bootstrap
+          command: npx lerna bootstrap
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
+          paths:
+            - node_modules
+            - packages/cli/node_modules
+            - packages/local-api/node_modules
+            - packages/local-client/node_modules
+    
 parameters:
   cli:
     type: boolean
