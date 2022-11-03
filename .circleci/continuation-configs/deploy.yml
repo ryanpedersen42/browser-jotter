@@ -1,0 +1,30 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@2.2.0
+
+jobs:
+  build:
+    executor: node
+    steps:
+      - checkout 
+  test:
+    executor: node
+    steps:
+      - checkout
+
+
+workflows:
+  main:
+    jobs:
+      - build
+      - test
+      - cypress/run:
+          name: integration_tests
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:lts
+
+# VS Code Extension Version: 1.0.0

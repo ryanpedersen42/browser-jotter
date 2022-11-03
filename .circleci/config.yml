@@ -13,6 +13,8 @@ workflows:
             packages/cli/.* cli true
             packages/local-api/.* local-api true
             packages/local-client/.* local-client true
-
-
+          filters:
+            branches:
+              ignore: /^(main|staging)$/ 
+              
 # VS Code Extension Version: 1.0.0
