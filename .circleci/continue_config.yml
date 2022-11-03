@@ -55,7 +55,7 @@ commands:
     steps:
       - run:
           name: Combine package-lock.json files to single file
-          command: npx lerna la -a | awk -F packages '{printf "\"packages%s/package-lock.json\" ", $2}' | xargs cat > << parameters.filename >>
+          command: npx lerna la -a | awk -F packages '{printf "\"packages%s/package-lock.json\" ", $2}' | xargs cat > combined-package-lock.txt
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
@@ -70,10 +70,6 @@ commands:
             - packages/cli/node_modules
             - packages/local-api/node_modules
             - packages/local-client/node_modules
-    
-
-
-
     
 parameters:
   cli:
