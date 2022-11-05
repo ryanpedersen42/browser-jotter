@@ -24,7 +24,7 @@ workflows:
     jobs:
       - cypress/run:
           name: integration_tests
-          executor: node 
+          # executor: node 
           start: npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
