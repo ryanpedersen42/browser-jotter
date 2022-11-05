@@ -21,6 +21,8 @@ workflows:
       - test
       - cypress/run:
           name: integration_tests
+          executor: cimg/node:lts
+          # start: 
 
 executors:
   node:

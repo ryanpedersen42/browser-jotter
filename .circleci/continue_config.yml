@@ -23,10 +23,10 @@ workflows:
   cypress_testing:
     jobs:
       - cypress/run:
-        name: integration_tests
-        executor: node 
-        start: npx lerna run start --parallel
-        wait-on: http://localhost:3000
+          name: integration_tests
+          executor: node 
+          start: npx lerna run start --parallel
+          wait-on: http://localhost:3000
   docs:
     when:
       unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
