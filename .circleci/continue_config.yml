@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.3
+  cypress: cypress-io/cypress@2.2.0
 
 jobs:
   build:
@@ -19,6 +20,13 @@ jobs:
             npx lerna run test --scope=<< parameters.scope >>
 
 workflows:
+  cypress_testing:
+    jobs:
+      - cypress/run:
+        name: integration_tests
+        executor: node 
+        start: npx lerna run start --parallel
+        wait-on: http://localhost:3000
   docs:
     when:
       unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
