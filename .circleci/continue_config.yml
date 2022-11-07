@@ -27,8 +27,7 @@ workflows:
           executor: cypress/browsers-chrome75
           post-checkout: 
             - run: |
-                npm i lerna
-                npx lerna bootstrap
+                npx lerna --help
           start: npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
