@@ -25,7 +25,7 @@ workflows:
       - cypress/run:
           name: integration_tests
           executor: cypress/base-16-14-2-slim 
-          start: npx lerna run start --parallel
+          start: cd project && npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
     when:
