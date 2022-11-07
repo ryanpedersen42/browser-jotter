@@ -24,7 +24,7 @@ workflows:
     jobs:
       - cypress/run:
           name: integration_tests
-          executor: cypress/browsers-chrome75
+          executor: browsers-chrome100-ff99-edge
           post-checkout: 
             - run: |
                 npx lerna --help
