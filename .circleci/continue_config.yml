@@ -25,7 +25,8 @@ workflows:
       - cypress/run:
           name: integration_tests
           executor: cypress/browsers-chrome75
-          post-checkout: npx lerna bootstrap
+          post-checkout: 
+            - run: npx lerna bootstrap
           start: npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
