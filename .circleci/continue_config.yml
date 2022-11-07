@@ -24,7 +24,7 @@ workflows:
     jobs:
       - cypress/run:
           name: integration_tests
-          executor: cypress/browsers:chrome69	
+          executor: cypress/browsers-chrome75
           start: npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
