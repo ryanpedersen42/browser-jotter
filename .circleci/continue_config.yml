@@ -27,7 +27,9 @@ workflows:
           executor: node-browsers
           post-checkout: 
             - run: sudo apt-get update && sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-            - run: npx lerna bootstrap --ci
+            # - run: npx lerna bootstrap --ci
+            - monorepo_cache:
+                filename: combined-package-lock.txt
           start: npx lerna run start --parallel
           wait-on: http://localhost:3000
   docs:
