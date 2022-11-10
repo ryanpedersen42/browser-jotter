@@ -26,14 +26,14 @@ workflows:
             packages/local-api/.* local-api true
             packages/local-client/.* local-client true
           name: staging-filtering
-          config-path: ./continuation-configs/staging.yml
+          config-path: .circleci/continuation-configs/deploy.yml
           filters:
             branches:
               only: /^(staging)$/
             tags:
               ignore: /.*/
       - continuation/continue:
-          configuration_path: ./continuation-configs/deploy.yml
+          configuration_path: .circleci/continuation-configs/deploy.yml
           filters:  
             tags:
               only: /.*/
