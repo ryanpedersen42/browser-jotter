@@ -32,6 +32,7 @@ workflows:
             - monorepo_cache:
                 filename: combined-package-lock.txt
           start: npx lerna run start --parallel
+          cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
           # install-command: cat combined-package-lock.txt
           wait-on: http://localhost:3000
           no-workspace: true
