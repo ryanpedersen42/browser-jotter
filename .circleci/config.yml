@@ -26,6 +26,7 @@ workflows:
             packages/local-api/.* local-api true
             packages/local-client/.* local-client true
           name: staging-filtering
+          configuration_path: ./continuation-configs/staging.yml
           filters:
             branches:
               only: /^(staging)$/
