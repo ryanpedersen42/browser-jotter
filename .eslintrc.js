@@ -11,6 +11,11 @@ module.exports = {
     "overrides": [
     ],
     "parser": "@typescript-eslint/parser",
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -22,5 +27,5 @@ module.exports = {
     "rules": {
         "semi": ["warn", "always"],
         "quotes": ["warn", "double"]
-    }
+    },
 }
