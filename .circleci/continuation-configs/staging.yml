@@ -7,7 +7,6 @@ orbs:
 jobs:
   unit_tests:
     executor: node 
-    parameters:
     steps:
       - checkout
       - lerna-cache/monorepo_cache:
@@ -15,11 +14,22 @@ jobs:
       - run:
           command: |
             npx lerna run test
-  
+  lint:
+    executor: node 
+    steps:
+      - checkout
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+      - run:
+          command: |
+            npx eslint packages/**
+
 workflows:
   staging:
     jobs:
-      - unit_tests
+      - lint
+      - unit_tests:
+          requires: [ lint ]
       - cypress/run:
           name: integration_tests
           executor: node-browsers
