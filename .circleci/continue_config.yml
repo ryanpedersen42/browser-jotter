@@ -31,7 +31,9 @@ workflows:
             - monorepo_cache:
                 filename: combined-package-lock.txt
           start: npx lerna run start --parallel
+          # install-command: cat combined-package-lock.txt
           wait-on: http://localhost:3000
+          no-workspace: true
   docs:
     when:
       unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]

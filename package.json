@@ -4,5 +4,8 @@
   "devDependencies": {
     "cypress": "^10.11.0",
     "lerna": "^6.0.1"
+  },
+  "scripts": {
+    "cy:run": "cypress run"
   }
 }
