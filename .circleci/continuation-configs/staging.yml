@@ -20,6 +20,7 @@ jobs:
       - checkout
       - lerna-cache/monorepo_cache:
           filename: combined-package-lock.txt
+      - run: npm ci
       - run:
           command: |
             npx eslint packages/**
