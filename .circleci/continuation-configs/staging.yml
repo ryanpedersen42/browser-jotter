@@ -23,7 +23,7 @@ jobs:
       - run: npm ci
       - run:
           command: |
-            npx eslint packages/**
+            npx eslint packages/** --debug
 
 workflows:
   staging:
