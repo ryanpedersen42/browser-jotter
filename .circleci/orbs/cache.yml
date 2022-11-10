@@ -1,45 +1,5 @@
 version: 2.1
-
-orbs:
-  cypress: cypress-io/cypress@2.2.0
-
-jobs:
-  build:
-    executor: node
-    steps:
-      - checkout
-  test:
-    executor: node 
-    steps:
-      - checkout
-  
-workflows:
-  staging:
-    jobs:
-      - build
-      - test
-      - cypress/run:
-          name: integration_tests
-          executor: node-browsers
-          post-checkout: 
-            - run: sudo apt-get update && sudo apt-get install xvfb
-            - monorepo_cache:
-                filename: combined-package-lock.txt
-          start: npx lerna run start --parallel
-          cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
-          wait-on: http://localhost:3000
-          no-workspace: true
-
-executors:
-  node:
-    docker:
-      - image: cimg/node:lts
-  base:
-    docker:
-      - image: cimg/base:stable
-  node-browsers:
-    docker:
-      - image: cimg/node:16.17.0-browsers
+description: An orb to concatenate package-lock.json files for lerna caching
 
 commands:
   monorepo_cache:

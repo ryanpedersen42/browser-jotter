@@ -20,22 +20,6 @@ jobs:
             npx lerna run test --scope=<< parameters.scope >>
 
 workflows:
-  cypress_testing:
-    jobs:
-      - cypress/run:
-          name: integration_tests
-          executor: node-browsers
-          post-checkout: 
-            - run: sudo apt-get update && sudo apt-get install xvfb
-            # - run: sudo apt-get update && sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-            # - run: npx lerna bootstrap --ci
-            - monorepo_cache:
-                filename: combined-package-lock.txt
-          start: npx lerna run start --parallel
-          cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
-          # install-command: cat combined-package-lock.txt
-          wait-on: http://localhost:3000
-          no-workspace: true
   docs:
     when:
       unless: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
