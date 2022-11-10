@@ -5,23 +5,25 @@ orbs:
   lerna-cache: ryanpedersen/lerna-cache@0.1.0
   
 jobs:
-  build:
-    executor: node
-    steps:
-      - checkout
-  test:
+  unit_tests:
     executor: node 
+    parameters:
     steps:
       - checkout
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+      - run:
+          command: |
+            npx lerna run test
   
 workflows:
   staging:
     jobs:
-      - build
-      - test
+      - unit_tets
       - cypress/run:
           name: integration_tests
           executor: node-browsers
+          requires: [ unit_tests ]
           post-checkout: 
             - run: sudo apt-get update && sudo apt-get install xvfb
             - lerna-cache/monorepo_cache:
