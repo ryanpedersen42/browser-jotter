@@ -19,7 +19,7 @@ jobs:
 workflows:
   staging:
     jobs:
-      - unit_tets
+      - unit_tests
       - cypress/run:
           name: integration_tests
           executor: node-browsers

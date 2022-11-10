@@ -21,7 +21,7 @@ workflows:
             tags:
               ignore: /.*/
       - continuation/continue:
-          name: staging-filtering
+          name: staging-flow
           configuration_path: .circleci/continuation-configs/staging.yml
           filters:
             branches:
@@ -30,6 +30,7 @@ workflows:
               ignore: /.*/
       - continuation/continue:
           configuration_path: .circleci/continuation-configs/deploy.yml
+          name: deploy-flow
           filters:  
             tags:
               only: /.*/
