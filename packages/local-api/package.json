@@ -14,7 +14,6 @@
     "start": "tsc --watch --preserveWatchOutput",
     "test": "echo passed",
     "prepublishOnly": "tsc",
-    "lint": "npx eslint src/**/*.ts{,x}"
   },
   "keywords": [],
   "author": "",
