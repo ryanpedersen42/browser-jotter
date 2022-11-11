@@ -11,6 +11,7 @@ jobs:
       - checkout
       - lerna-cache/monorepo_cache:
           filename: combined-package-lock.txt
+      - run: npx lerna bootstrap
       - run:
           command: |
             npx lerna run test
