@@ -18,14 +18,14 @@ jobs:
     executor: node 
     steps:
       - checkout
-      # - lerna-cache/monorepo_cache:
-      #     filename: combined-package-lock.txt
-      # - run: npm ci
-      - run: npx lerna bootstrap
-      - run: npx lerna run lint
-      # - run:
-      #     command: |
-      #       npx eslint packages/** --debug
+      - run: 
+          name: Lerna Bootstrap
+          command: |
+            npx lerna bootstrap
+      - run: 
+          name: Lint
+          command: |
+            npx lerna run lint
 
 workflows:
   staging:
