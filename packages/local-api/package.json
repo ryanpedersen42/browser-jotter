@@ -13,7 +13,8 @@
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput",
     "test": "echo passed",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "tsc",
+    "lint": "npx eslint src/**/*.ts{,x}"
   },
   "keywords": [],
   "author": "",

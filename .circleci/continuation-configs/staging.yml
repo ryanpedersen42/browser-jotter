@@ -21,10 +21,10 @@ jobs:
       # - lerna-cache/monorepo_cache:
       #     filename: combined-package-lock.txt
       # - run: npm ci
-      - run: npx lerna bootstrap
-      - run:
-          command: |
-            npx eslint packages/** --debug
+      - run: npx lerna run lint
+      # - run:
+      #     command: |
+      #       npx eslint packages/** --debug
 
 workflows:
   staging:
