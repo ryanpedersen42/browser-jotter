@@ -19,14 +19,13 @@ jobs:
     executor: node 
     steps:
       - checkout
-      - run: 
-          name: Lerna Bootstrap
-          command: |
-            npx lerna bootstrap
-      - run: 
-          name: Lint
-          command: |
-            npx lerna run lint
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+          test-commands: 
+            - run: 
+                name: Lint
+                command: |
+                  npx lerna run lint
 
 workflows:
   staging:
@@ -58,5 +57,3 @@ executors:
   node-browsers:
     docker:
       - image: cimg/node:16.17.0-browsers
-
-# VS Code Extension Version: 1.4.0

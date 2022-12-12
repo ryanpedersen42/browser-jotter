@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  lerna-cache: ryanpedersen/lerna-cache@0.1.0
+  lerna-cache: ryanpedersen/lerna-cache@0.2.0
 
 jobs:
   build:
@@ -14,9 +14,10 @@ jobs:
       - checkout
       - lerna-cache/monorepo_cache:
           filename: combined-package-lock.txt
-      - run:
-          command: |
-            npx lerna run test --scope=<< parameters.scope >>
+          test-commands:
+            - run:
+                command: |
+                  npx lerna run test --scope=<< parameters.scope >>
 
 workflows:
   docs:
