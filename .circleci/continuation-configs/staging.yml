@@ -11,9 +11,10 @@ jobs:
       - checkout
       - lerna-cache/monorepo_cache:
           filename: combined-package-lock.txt
-      - run:
-          command: |
-            npx lerna run test
+          test-commands: 
+            - run:
+                command: |
+                  npx lerna run test
   lint:
     executor: node 
     steps:
@@ -58,4 +59,4 @@ executors:
     docker:
       - image: cimg/node:16.17.0-browsers
 
-# VS Code Extension Version: 1.0.0
+# VS Code Extension Version: 1.4.0
