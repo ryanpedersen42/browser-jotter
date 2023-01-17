@@ -1,32 +1,25 @@
 version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@2.2.0
-
 jobs:
   build:
     executor: node
     steps:
       - checkout 
-  test:
+  deploy:
     executor: node
     steps:
       - checkout
-
+      - run: npx lerna publish from-git --yes
 
 workflows:
   main:
     jobs:
       - build
-      - test
-      - cypress/run:
-          name: integration_tests
-          executor: cimg/node:lts
-          # start: 
+      - deploy:
+          requires: [ build ]
+
 
 executors:
   node:
     docker:
       - image: cimg/node:lts
-
-# VS Code Extension Version: 1.0.0
