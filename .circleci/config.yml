@@ -4,7 +4,8 @@ setup: true
 
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
-  
+  continuation: circleci/continuation@0.3.1
+
 workflows:
   generate-config:
     jobs:
@@ -13,6 +14,25 @@ workflows:
             packages/cli/.* cli true
             packages/local-api/.* local-api true
             packages/local-client/.* local-client true
-
-
-# VS Code Extension Version: 1.0.0
+          name: commit-filtering
+          filters:
+            branches:
+              ignore: /^(main|staging)$/ 
+            tags:
+              ignore: /.*/
+      - continuation/continue:
+          name: staging-flow
+          configuration_path: .circleci/continuation-configs/staging.yml
+          filters:
+            branches:
+              only: /^(staging)$/
+            tags:
+              ignore: /.*/
+      - continuation/continue:
+          configuration_path: .circleci/continuation-configs/deploy.yml
+          name: deploy-flow
+          filters:  
+            tags:
+              only: /.*/
+            branches:
+              only: /^(main)$/

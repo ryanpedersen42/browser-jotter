@@ -1,6 +1,6 @@
 {
   "name": "@browser-jotter/local-client",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "publishConfig": {
     "access": "public"
   },
@@ -46,7 +46,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "npx eslint src/**/*.ts{,x}"
   },
   "eslintConfig": {
     "extends": [
@@ -65,5 +66,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "gitHead": "4ebc9bf1d9553962b4ab0bf8cfb7cf9020cd0b53"
 }

@@ -1,0 +1,68 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@2.2.0
+  lerna-cache: ryanpedersen/lerna-cache@0.2.0
+  
+jobs:
+  unit_tests:
+    executor: node 
+    steps:
+      - checkout
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+          test-commands: 
+            - run:
+                command: |
+                  npx lerna run test
+  lint:
+    executor: node 
+    steps:
+      - checkout
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+          test-commands: 
+            - run: 
+                name: Lint
+                command: |
+                  npx lerna run lint
+  # tag:
+  #   executor: node
+  #   parameters:
+  #     semver:
+  #       default: "patch"
+  #       type: string
+  #   steps:
+  #     - checkout 
+  #     - run: npx lerna version << parameters.semver >> --yes
+
+workflows:
+  staging:
+    jobs:
+      - lint
+      - unit_tests:
+          requires: [ lint ]
+      - cypress/run:
+          name: integration_tests
+          executor: node-browsers
+          requires: [ unit_tests ]
+          post-checkout: 
+            - run: sudo apt-get update && sudo apt-get install xvfb
+            - lerna-cache/monorepo_cache:
+                filename: combined-package-lock.txt
+          start: npx lerna run start --parallel
+          cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
+          wait-on: http://localhost:3000
+          no-workspace: true
+      # - tag
+executors:
+  node:
+    docker:
+      - image: cimg/node:lts
+    resource_class: medium
+  base:
+    docker:
+      - image: cimg/base:stable
+  node-browsers:
+    docker:
+      - image: cimg/node:16.17.0-browsers

@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  build:
+    executor: node
+    steps:
+      - checkout 
+  deploy:
+    executor: node
+    steps:
+      - checkout
+      - run: npm set //registry.npmjs.org/:_authToken=$npm_token
+      - run: npx lerna publish from-git --yes
+
+workflows:
+  main:
+    jobs:
+      - build
+      - deploy:
+          requires: [ build ]
+
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:lts

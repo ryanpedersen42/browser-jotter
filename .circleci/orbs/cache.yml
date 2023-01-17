@@ -1,0 +1,32 @@
+version: 2.1
+description: An orb to concatenate package-lock.json files for lerna caching
+
+commands:
+  monorepo_cache:
+    description: "Concatenate all package-lock.json files recognized by lerna.js into single file. File is used as checksum source for part of caching key."
+    parameters:
+      filename:
+        type: string
+      test-commands:
+        description: "Additional steps to run after boostrap"
+        type: steps
+        default: []
+    steps:
+      - run:
+          name: Combine package-lock.json files to single file
+          command: npx lerna la -a | awk -F packages '{printf "\"packages%s/package-lock.json\" ", $2}' | xargs cat > combined-package-lock.txt
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
+            - v1-deps
+      - run:
+          name: Bootstrap
+          command: npx lerna bootstrap
+      - steps: << parameters.test-commands >>
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
+          paths:
+            - node_modules
+            - packages/cli/node_modules
+            - packages/local-api/node_modules
+            - packages/local-client/node_modules
