@@ -1,10 +1,11 @@
 version: 2.1
 
-filters: &filters 
-  tags:
-    only: /.*/
-  branches:
-    only: /^(main)$/
+params: &filters 
+  filters:
+    tags:
+      only: /.*/
+    branches:
+      only: /^(main)$/
 
 jobs:
   build:
