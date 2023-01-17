@@ -9,6 +9,7 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: npm set //registry.npmjs.org/:_authToken=$npm_token
       - run: npx lerna publish from-git --yes
 
 workflows:
