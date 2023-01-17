@@ -34,7 +34,7 @@ jobs:
         type: string
     steps:
       - checkout 
-      - run: npx lerna version --yes
+      - run: npx lerna version << parameters.semver >> --yes
 
 workflows:
   staging:
