@@ -1,5 +1,11 @@
 version: 2.1
 
+filters: &filters 
+  tags:
+    only: /.*/
+  branches:
+    only: /^(main)$/
+
 jobs:
   build:
     executor: node
@@ -15,9 +21,11 @@ jobs:
 workflows:
   main:
     jobs:
-      - build
+      - build:
+          <<: *filters
       - deploy:
           requires: [ build ]
+          <<: *filters
 
 
 executors:
