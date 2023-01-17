@@ -26,15 +26,18 @@ jobs:
                 name: Lint
                 command: |
                   npx lerna run lint
-  # tag:
-  #   executor: node
-  #   parameters:
-  #     semver:
-  #       default: "patch"
-  #       type: string
-  #   steps:
-  #     - checkout 
-  #     - run: npx lerna version << parameters.semver >> --yes
+  tag:
+    executor: node
+    parameters:
+      semver:
+        default: "patch"
+        type: string
+    steps:
+      - checkout 
+      - run: | 
+          git config --global user.email $GIT_EMAIL
+          git config --global user.name $GIT_NAME
+      - run: npx lerna version << parameters.semver >> --yes
 
 workflows:
   staging:
@@ -54,7 +57,7 @@ workflows:
           cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
           wait-on: http://localhost:3000
           no-workspace: true
-      # - tag
+      - tag
 executors:
   node:
     docker:
