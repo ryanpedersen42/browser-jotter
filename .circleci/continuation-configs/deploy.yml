@@ -14,6 +14,10 @@ jobs:
       - checkout 
   deploy:
     executor: node
+    parameters:
+      semver:
+        default: "patch"
+        type: string
     steps:
       - add_ssh_keys:
           fingerprints:
