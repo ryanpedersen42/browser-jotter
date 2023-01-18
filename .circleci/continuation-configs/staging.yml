@@ -26,21 +26,21 @@ jobs:
                 name: Lint
                 command: |
                   npx lerna run lint
-  tag:
-    executor: node
-    parameters:
-      semver:
-        default: "patch"
-        type: string
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "28:af:78:86:80:10:b6:f9:36:8a:29:9a:01:b7:e4:6e"
-      - checkout 
-      - run: | 
-          git config --global user.email $GIT_EMAIL
-          git config --global user.name $GIT_NAME
-      - run: npx lerna version << parameters.semver >> --yes
+  # tag:
+  #   executor: node
+  #   parameters:
+  #     semver:
+  #       default: "patch"
+  #       type: string
+  #   steps:
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "28:af:78:86:80:10:b6:f9:36:8a:29:9a:01:b7:e4:6e"
+  #     - checkout 
+  #     - run: | 
+  #         git config --global user.email $GIT_EMAIL
+  #         git config --global user.name $GIT_NAME
+  #     - run: npx lerna version << parameters.semver >> --yes
 
 workflows:
   staging:
@@ -60,7 +60,7 @@ workflows:
           cache-key: v1-deps-{{ checksum "package-lock.json" }}-{{ checksum "combined-package-lock.txt" }}
           wait-on: http://localhost:3000
           no-workspace: true
-      - tag
+      # - tag
 executors:
   node:
     docker:
