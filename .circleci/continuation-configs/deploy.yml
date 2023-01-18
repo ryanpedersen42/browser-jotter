@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  lerna-cache: ryanpedersen/lerna-cache@0.2.0
+
 params: &filters 
   filters:
     tags:
@@ -23,6 +26,8 @@ jobs:
           fingerprints:
             - "28:af:78:86:80:10:b6:f9:36:8a:29:9a:01:b7:e4:6e"
       - checkout 
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
       - run: | 
           git config --global user.email $GIT_EMAIL
           git config --global user.name $GIT_NAME
