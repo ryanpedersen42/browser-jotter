@@ -33,6 +33,9 @@ jobs:
         default: "patch"
         type: string
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "28:af:78:86:80:10:b6:f9:36:8a:29:9a:01:b7:e4:6e"
       - checkout 
       - run: | 
           git config --global user.email $GIT_EMAIL
