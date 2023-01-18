@@ -15,10 +15,16 @@ jobs:
   deploy:
     executor: node
     steps:
-      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "28:af:78:86:80:10:b6:f9:36:8a:29:9a:01:b7:e4:6e"
+      - checkout 
+      - run: | 
+          git config --global user.email $GIT_EMAIL
+          git config --global user.name $GIT_NAME
       - run: npm set //registry.npmjs.org/:_authToken=$npm_token
       - run: git fetch --tags
-      - run: npx lerna publish from-git --yes
+      - run: npx lerna publish 
 
 workflows:
   main:
