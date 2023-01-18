@@ -32,7 +32,7 @@ workflows:
           configuration_path: .circleci/continuation-configs/deploy.yml
           name: deploy-flow
           filters:  
-            tags:
-              only: /.*/
+            # tags:
+            #   only: /.*/
             branches:
               only: /^(main)$/
