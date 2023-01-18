@@ -23,7 +23,6 @@ jobs:
           git config --global user.email $GIT_EMAIL
           git config --global user.name $GIT_NAME
       - run: npm set //registry.npmjs.org/:_authToken=$npm_token
-      - run: git fetch --tags
       - run: npx lerna publish 
 
 workflows:
