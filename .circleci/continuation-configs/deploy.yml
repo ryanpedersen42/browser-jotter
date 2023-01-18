@@ -23,7 +23,7 @@ jobs:
           git config --global user.email $GIT_EMAIL
           git config --global user.name $GIT_NAME
       - run: npm set //registry.npmjs.org/:_authToken=$npm_token
-      - run: npx lerna publish 
+      - run: npx lerna publish << parameters.semver >> --yes
 
 workflows:
   main:
