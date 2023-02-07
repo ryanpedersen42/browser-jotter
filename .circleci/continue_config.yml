@@ -22,7 +22,10 @@ jobs:
 workflows:
   docs:
     when:
-      or: [ << pipeline.parameters.cli >>, << pipeline.parameters.local-api >>, << pipeline.parameters.local-client >> ]
+      and: 
+        - not: << pipeline.parameters.cli >>
+        - not: << pipeline.parameters.local-api >>
+        - not: << pipeline.parameters.local-client >>
     jobs:
       - build
   cli:
