@@ -30,4 +30,3 @@ export const serve = (
     app.listen(port, resolve).on("error", reject);
   });
 };
-
