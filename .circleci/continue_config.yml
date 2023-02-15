@@ -4,6 +4,20 @@ orbs:
   lerna-cache: ryanpedersen/lerna-cache@0.2.0
   
 jobs:
+  test:
+    executor: node
+    parameters:
+      scope:
+        default: "browser-jotter"
+        type: string
+    steps:
+      - checkout
+      - lerna-cache/monorepo_cache:
+          filename: combined-package-lock.txt
+          test-commands:
+            - run:
+                command: |
+                  npx lerna run test --scope=<< parameters.scope >>
   build:
     executor: node
     parameters:
@@ -32,6 +46,8 @@ workflows:
     when: << pipeline.parameters.cli >>
     jobs:
       - build
+      - test:
+          requires: [build]
   
   local-api:
     when: << pipeline.parameters.local-api >>
